@@ -1,0 +1,60 @@
+<Player>
+	<Name>Carl</Name>
+	<Role>
+		<RoleAttributes>
+			<Attri name="HP">1200</Attri>
+			<Attri name="HP_MAX">1500</Attri>
+			<Attri name="Mana">600</Attri>
+			<Attri name="Mana_MAX">650</Attri>
+			<Attri name="EXP">250</Attri>
+			<Attri name="Level">2</Attri>
+			<Attri name="AD">168</Attri>
+			<Attri name="AP">25</Attri>
+			<Attri name="Armor">58</Attri>
+			<Attri name="MR">34</Attri>
+			<Attri name="alive">true</Attri>
+			<Attri name="Money">2300</Attri>
+			<Attri name="RoleName">Invoker</Attri>
+		</RoleAttributes>
+		<Equipment>
+			<Gear part="HEAD">
+				<Attri name="Armor">18</Attri>
+				<Attri name="HP_MAX">200</Attri>
+				<Attri name="HP_MAX">200</Attri>
+			</Gear>
+			<Gear part="CHEST">
+				<Attri name="Armor">18</Attri>
+				<Attri name="MR">20</Attri>
+				<Attri name="Mana_MAX">200</Attri>
+				<Attri name="Mana">200</Attri>
+			</Gear>
+			<Gear part="HANDS">
+				<Attri name="Armor">10</Attri>
+				<Attri name="AD">35</Attri>
+			</Gear>
+			<Gear part="LEG">
+				<Attri name="MR">20</Attri>
+				<Attri name="Mana_MAX">100</Attri>
+				<Attri name="Mana">100</Attri>
+			</Gear>
+			<Gear part="BOOTS">
+				<Attri name="Armor">18</Attri>
+				<Attri name="AP">25</Attri>
+			</Gear>
+			<Gear part="WEAPON_L">
+				<Attri name="AD">40</Attri>
+				<Attri name="AP">40</Attri>
+			</Gear>
+			<Gear part="WEAPON_R">
+				<Attri name="AD">85</Attri>
+			</Gear>
+			<Gear part="RING">
+				<Attri name="Mana_MAX">150</Attri>
+				<Attri name="Mana">150</Attri>
+				<Attri name="HP_MAX">250</Attri>
+				<Attri name="HP_MAX">250</Attri>
+			</Gear>
+		</Equipment>
+		<Skill></Skill>
+	</Role>
+</Player>
