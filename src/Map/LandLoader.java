@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import Common.Define;
+
 
 public class LandLoader {
 	private static LandLoader landLoader;
@@ -22,8 +24,6 @@ public class LandLoader {
 			e.printStackTrace();
 		}
 		//int land
-		
-		
 	}
 	
 	public BufferedImage getTest(){

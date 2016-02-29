@@ -74,7 +74,7 @@ public class GUIFrame extends JFrame{
 	}
 	private void Initial() {
 		refresh_thread_start();
-		this.setBounds(2000, 600, FrameW, FrameH);
+		this.setBounds(1000, 600, FrameW, FrameH);
 		this.setLayout(null);
 		mainpanel = new JPanel();
 		mainpanel.setLayout(null);

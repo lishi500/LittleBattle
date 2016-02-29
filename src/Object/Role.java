@@ -9,7 +9,7 @@ public abstract class Role {
 	public Role(int id) {
 		super();
 		this.id = id;
-	}
+	} 
 	public Role(){}
 	public String name;
 	public int id;

@@ -29,7 +29,7 @@ public class Driver {
 	public static void main(String[] args) {
 		//new Driver().init();
 		new Driver().init2();
-	}
+	} 
 
 	private void init2() {
 		GUIFrame guiFrame = GUIFrame.getGUI();

@@ -26,6 +26,7 @@ public class Editor extends JFrame implements ActionListener {
 	EquipmentPanel EquipmentPanel;
 	SkillPanel SkillPanel;
 	EffectPanel effectPanel;
+	MapPanel mapPanel;
 	JButton home, addPlayer, addRole, addAttri, addGear, equipment, addSkill,
 			addEffectButton;
 
@@ -67,6 +68,8 @@ public class Editor extends JFrame implements ActionListener {
 		addGear = initialButton(addGear, "Gear");
 		addSkill = initialButton(addSkill, "Skill");
 		addEffectButton = initialButton(addEffectButton, "Effect");
+		addEffectButton = initialButton(addEffectButton, "Map");
+
 
 	}
 
@@ -150,7 +153,11 @@ public class Editor extends JFrame implements ActionListener {
 					effectPanel = new EffectPanel();
 				swapPanel(effectPanel);
 				break;
-
+			case "Map":
+				if (mapPanel == null)
+					mapPanel = new MapPanel();
+				swapPanel(mapPanel);
+				break;
 			default:
 				break;
 			}
