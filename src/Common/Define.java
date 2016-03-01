@@ -247,32 +247,10 @@ public class Define {
 	public static final int GAME_MENU =2;
 	public static final int GAME_PLAY =3;
 	public static final int GAME_CLOSE =4;
-	/* ---------------------------------------  LAND ---------------------------------*/
-	public static final int LAND_WATER1 =1;
-	public static final int LAND_WATER2 =2;
-	public static final int LAND_WATER3 =3;
-	public static final int LAND_WATER4 =4;
-	public static final int LAND_WATER5 =5;
-	public static final int LAND_WATER6 =6;
-	public static final int LAND_WATER7 =7;
-	public static final int LAND_WATER8 =8;
-	public static final int LAND_LAND1 =9;
-	public static final int LAND_LAND2 =10;
-	public static final int LAND_LAND3 =11;
-	public static final int LAND_LAND4 =12;
-	public static final int LAND_LAND5 =13;
-	public static final int LAND_LAND6 =14;
-	public static final int LAND_LAND7 =15;
-	public static final int LAND_LAND8 =16;
-	public static final int LAND_LAND9 =17;
-	public static final int LAND_GRASS1 =18;
-	public static final int LAND_GRASS2 =19;
-	public static final int LAND_GRASS3 =20;
-	public static final int LAND_GRASS4 =21;
-	public static final int LAND_GRASS5 =22;
-	public static final int LAND_GRASS6 =23;
-	public static final int LAND_GRASS7 =24;
-	public static final int LAND_GRASS8 =25;
+	/* ---------------------------------------  MAP ---------------------------------*/
+	
+	public static final String[] MAP_Land_TYPE={"Land","Grass","Water","Tree","Snow","Mountain","Rock","Wall"}; 
+	public static final String[] MAP_Object_TYPE = {"Tree_obj", "Rock_obj","Grass_obj","Weapon_obj","Well_obj","Sign_obj","General_obj","House_obj","Castel_obj","Window_obj"};
 	
 }
 

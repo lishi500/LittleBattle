@@ -31,7 +31,7 @@ public class Editor extends JFrame implements ActionListener {
 			addEffectButton;
 
 	private Editor() {
-		this.setSize(800, 600);
+		this.setBounds(1800, 600, 800, 600);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		Initial();
 		this.setVisible(true);

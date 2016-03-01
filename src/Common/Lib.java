@@ -28,6 +28,12 @@ public class Lib {
 		}
 	}
 	
+	public boolean isNumber(String str){
+		if(str.matches("\\d+"))
+			return true;
+		return false;
+	}
+	
 	public JList reloadList(ArrayList  arraylist,JList list, JPanel container){
 		if(arraylist!=null){
 			Object[] array = new Object[arraylist.size()];
