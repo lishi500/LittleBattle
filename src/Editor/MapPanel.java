@@ -235,7 +235,34 @@ public class MapPanel extends JPanel implements ActionListener,KeyListener,Mouse
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+		int keyCode = e.getKeyCode();
+	    switch( keyCode ) { 
+	        case KeyEvent.VK_UP:
+	        	arrawControl(yField,-1);
+	            break;
+	        case KeyEvent.VK_DOWN:
+	        	arrawControl(yField,1);
+	            break;
+	        case KeyEvent.VK_LEFT:
+	        	arrawControl(xField,-1);
+	            break;
+	        case KeyEvent.VK_RIGHT :
+	        	arrawControl(xField,1);
+	            break;
+	     }
+	}
+	private void arrawControl(JTextField textField, int amount){
+		String str = textField.getText();
+		int newPos = 0;
+		if(str!="" && str!=null){
+			if(Lib.getInstance().isNumber(str)){
+				newPos = Integer.parseInt(str)+amount;
+			}
+		}else{
+			if(amount>0)
+				newPos = amount;
+		}
+		textField.setText(Integer.toString(newPos));
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {
