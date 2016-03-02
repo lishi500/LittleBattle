@@ -52,4 +52,5 @@ public class MapSegment {
 		return bimg;
 	}
 	
+	
 }

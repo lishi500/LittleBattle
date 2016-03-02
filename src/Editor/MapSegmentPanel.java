@@ -46,6 +46,8 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 	JLabel cutIcon;
 	BufferedImage bimg,cutimg;
 	boolean selecting,pointing;
+	
+	float scale_factor = 3.0f;
 
 	public MapSegmentPanel(){
 		xpos=0;ypos=0;width=0;height=0;
@@ -78,6 +80,10 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 		yField = new JTextField("");
 		wField = new JTextField("");
 		hField = new JTextField("");
+		xField.setDocument(new JTextFieldFilter(JTextFieldFilter.NUMERIC));
+		yField.setDocument(new JTextFieldFilter(JTextFieldFilter.NUMERIC));
+		wField.setDocument(new JTextFieldFilter(JTextFieldFilter.NUMERIC));
+		hField.setDocument(new JTextFieldFilter(JTextFieldFilter.NUMERIC));
 		nameField = new JTextField("");
 		pathField = new JTextField("");
 
@@ -171,14 +177,22 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 	}
 
 	private void getSubImage(int x, int y, int w, int h){
+		
+		if(x+w>bimg.getWidth() || y+h>bimg.getHeight()){
+			
+			System.out.println(x+"+"+w+"="+(x+w)+">?"+bimg.getWidth() + "||"+ y+"+"+h+"="+(y+h)+">?" + bimg.getHeight());
+			return;
+			
+		}
+		
 		if(x>=0 && y>=0 && w>0 && h>0){
 			cutimg = bimg.getSubimage(x,y, w,h);
 			
 			int c_w = cutimg.getWidth();
 			int c_h = cutimg.getHeight();
-			BufferedImage after = new BufferedImage(c_w*2, c_h*2, BufferedImage.TYPE_INT_ARGB);
+			BufferedImage after = new BufferedImage((int)(c_w*scale_factor), (int)(c_h*scale_factor), BufferedImage.TYPE_INT_ARGB);
 			AffineTransform at = new AffineTransform();
-			at.scale(2.0, 2.0);
+			at.scale(scale_factor, scale_factor);
 			AffineTransformOp scaleOp = 
 			   new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 			after = scaleOp.filter(cutimg, after);
@@ -246,7 +260,7 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 	private void arrawControl(JTextField textField, int amount){
 		String str = textField.getText();
@@ -258,7 +272,11 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 		}else{
 			if(amount>0)
 				newPos = amount;
+			else
+				newPos = 0;
 		}
+		if(newPos<=0)
+			newPos=0;
 		textField.setText(Integer.toString(newPos));
 	}
 	@Override
@@ -267,25 +285,58 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 			pointing = true;
 		}
 		int keyCode = e.getKeyCode();
-		System.out.println("Typed: " + keyCode);
 		switch( keyCode ) { 
 		case KeyEvent.VK_W:
 			arrawControl(yField,-1);
+			e.consume();
 			break;
 		case KeyEvent.VK_S:
+			if(Integer.parseInt(yField.getText())+1>bimg.getHeight())
+				break;
 			arrawControl(yField,1);
+			e.consume();
 			break;
 		case KeyEvent.VK_A:
 			arrawControl(xField,-1);
+			e.consume();
 			break;
 		case KeyEvent.VK_D :
+			if(Integer.parseInt(xField.getText())+1>bimg.getWidth())
+				break;
 			arrawControl(xField,1);
+			e.consume();
+			break;
+		case KeyEvent.VK_Q:
+			if(Integer.parseInt(xField.getText())+Integer.parseInt(wField.getText())-1<1)
+				break;
+			arrawControl(wField,-1);
+			e.consume();
+			break;
+		case KeyEvent.VK_E:
+			if(Integer.parseInt(xField.getText())+Integer.parseInt(wField.getText())+1>bimg.getWidth())
+				break;
+			arrawControl(wField,1);
+			e.consume();
+			break;
+		case KeyEvent.VK_Z:
+			if(Integer.parseInt(yField.getText())+Integer.parseInt(hField.getText())-1<1)
+				break;
+			arrawControl(hField,-1);
+			e.consume();
+			break;
+		case KeyEvent.VK_X:
+			if(Integer.parseInt(yField.getText())+Integer.parseInt(hField.getText())+1>bimg.getHeight())
+				break;
+			arrawControl(hField,1);
+			e.consume();
 			break;
 		}
-		repaint();
+		getSubImage(Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()),
+				Integer.parseInt(wField.getText()), Integer.parseInt(hField.getText()));
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
+
 		if(e.getKeyCode() == KeyEvent.VK_CONTROL){
 			pointing = false;
 		}
@@ -301,6 +352,7 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 						Integer.parseInt(wField.getText()), Integer.parseInt(hField.getText()));
 			}
 		}
+		repaint();
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
