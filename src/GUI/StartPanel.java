@@ -21,7 +21,7 @@ public class StartPanel extends JPanel{
 	public StartPanel(){
 		this.setBounds(0,0,GUIFrame.FrameW, GUIFrame.FrameH);
 		try {
-			bimg = ImageIO.read(new File("img/LittleBattleStart.PNG"));
+			bimg =ImageIO.read(new File("img/LittleBattleStart.PNG"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

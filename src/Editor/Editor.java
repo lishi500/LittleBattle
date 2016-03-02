@@ -26,7 +26,7 @@ public class Editor extends JFrame implements ActionListener {
 	EquipmentPanel EquipmentPanel;
 	SkillPanel SkillPanel;
 	EffectPanel effectPanel;
-	MapPanel mapPanel;
+	MapSegmentPanel mapPanel;
 	JButton home, addPlayer, addRole, addAttri, addGear, equipment, addSkill,
 			addEffectButton;
 
@@ -155,7 +155,7 @@ public class Editor extends JFrame implements ActionListener {
 				break;
 			case "Map":
 				if (mapPanel == null)
-					mapPanel = new MapPanel();
+					mapPanel = new MapSegmentPanel();
 				swapPanel(mapPanel);
 				break;
 			default:
