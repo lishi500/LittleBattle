@@ -19,6 +19,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -30,8 +32,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Common.Define;
 import Common.Lib;
+import Data.DAO.MapSegmentDAO;
 import Map.MapResources;
+import Map.MapSegment;
 import Object.Skill;
 
 
@@ -39,8 +44,8 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 	JPanel leftPanel,rightPanel;
 	int xpos,ypos,width,height, y_start_line,select_x1,select_y1,select_x2,select_y2;
 	JComboBox<String> mapTypeSelector;
-	JTextField xField,yField,wField,hField,nameField,pathField,loadImagePath;
-	JButton loadImageButton;
+	JTextField xField,yField,wField,hField,nameField,loadImagePath,idField;
+	JButton loadImageButton,addMapSegment,delMapSegment;
 	JFileChooser jFileChooser;
 	JPanel bitmapCanvas,cutImageCanvas;
 	JLabel cutIcon;
@@ -74,7 +79,6 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 		hJLabel = new JLabel("H: ");
 		nameJLabel = new JLabel("name: ");
 		typeJLabel = new JLabel("type: ");
-		pathJlabel = new JLabel("path: ");
 
 		xField = new JTextField("");
 		yField = new JTextField("");
@@ -85,11 +89,19 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 		wField.setDocument(new JTextFieldFilter(JTextFieldFilter.NUMERIC));
 		hField.setDocument(new JTextFieldFilter(JTextFieldFilter.NUMERIC));
 		nameField = new JTextField("");
-		pathField = new JTextField("");
+		idField = new JTextField("");
+		idField.setEditable(false);
 
 		mapTypeSelector= new JComboBox<String>();
+		String[] typesStrings = Lib.getInstance().concatenateArray(Define.MAP_Land_TYPE, Define.MAP_Object_TYPE);
+		Lib.getInstance().generateBox(new ArrayList<String>(Arrays.asList(typesStrings)) , mapTypeSelector);
 
-		rightPanel.setLayout(new GridLayout(8, 4,20,10));
+		addMapSegment = new JButton("Add Segment");
+		addMapSegment.addActionListener(this);
+		delMapSegment = new JButton("Delete Segment");
+		delMapSegment.addActionListener(this);
+		
+		rightPanel.setLayout(new GridLayout(8, 4,10,30));
 		rightPanel.add(xJLabel);
 		rightPanel.add(xField);
 		rightPanel.add(yJLabel);
@@ -104,12 +116,14 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 		rightPanel.add(mapTypeSelector);
 		rightPanel.add(new JLabel());
 		rightPanel.add(new JLabel());
+		rightPanel.add(idField);
+		rightPanel.add(addMapSegment);
+		
+		
 		rightPanel.add(new JLabel());
 		rightPanel.add(new JLabel());
 		rightPanel.add(new JLabel());
-		rightPanel.add(new JLabel());
-		rightPanel.add(new JLabel());
-		rightPanel.add(new JLabel());
+		rightPanel.add(delMapSegment);
 		rightPanel.add(new JLabel());
 		rightPanel.add(new JLabel());
 		rightPanel.add(new JLabel());
@@ -180,7 +194,7 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 		
 		if(x+w>bimg.getWidth() || y+h>bimg.getHeight()){
 			
-			System.out.println(x+"+"+w+"="+(x+w)+">?"+bimg.getWidth() + "||"+ y+"+"+h+"="+(y+h)+">?" + bimg.getHeight());
+//			System.out.println(x+"+"+w+"="+(x+w)+">?"+bimg.getWidth() + "||"+ y+"+"+h+"="+(y+h)+">?" + bimg.getHeight());
 			return;
 			
 		}
@@ -234,7 +248,7 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 		selecting = true;
 		select_x1 = e.getX();
 		select_y1 = e.getY();
-		System.out.println("Start:"+select_x1+"|"+select_y1);
+//		System.out.println("Start:"+select_x1+"|"+select_y1);
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -346,8 +360,8 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 					&&	Lib.getInstance().isNumber(wField.getText())	
 					&&	Lib.getInstance().isNumber(hField.getText())	
 					){
-				System.out.println(Integer.parseInt(xField.getText()) +"|"+Integer.parseInt(yField.getText())+"|"+
-						Integer.parseInt(wField.getText())+"|"+ Integer.parseInt(hField.getText()));
+//				System.out.println(Integer.parseInt(xField.getText()) +"|"+Integer.parseInt(yField.getText())+"|"+
+//						Integer.parseInt(wField.getText())+"|"+ Integer.parseInt(hField.getText()));
 				getSubImage(Integer.parseInt(xField.getText()), Integer.parseInt(yField.getText()),
 						Integer.parseInt(wField.getText()), Integer.parseInt(hField.getText()));
 			}
@@ -362,6 +376,37 @@ public class MapSegmentPanel extends JPanel implements ActionListener,KeyListene
 				File file = jFileChooser.getSelectedFile();
 				if(file.exists()){
 					reloadBitMap(file.getName());
+				}
+			}
+		}else if(e.getSource() == addMapSegment){
+			String name=nameField.getText();
+			String type=(String) mapTypeSelector.getSelectedItem();
+			String file_path=loadImagePath.getText();  
+			if(xField.getText()=="" || yField.getText()=="" || wField.getText()=="" || hField.getText()=="")
+				return;
+			int xpos=Integer.parseInt(xField.getText());
+			int ypos=Integer.parseInt(yField.getText());
+			int width=Integer.parseInt(wField.getText());
+			int height=Integer.parseInt(hField.getText());
+			
+			if(xpos>=0 && ypos>=0 && width>0 && height>0){
+				MapSegment mapSegment= new MapSegment(name, type, file_path, xpos, ypos, width, height);
+				int new_id = new MapSegmentDAO().insert(mapSegment);
+				if(new_id==-1){
+					idField.setText("Error");
+				}else{
+					idField.setText(Integer.toString(new_id));
+				}
+			}else{
+				System.out.println(xpos+"|"+ypos+"|"+width+"|"+height+"|");
+			}
+		}else if(e.getSource() == delMapSegment){
+			if(idField.getText()!=null && idField.getText()!=""){
+				int id = Integer.parseInt(idField.getText());
+				MapSegment mapSegment = new MapSegment();
+				mapSegment.id = id;
+				if(new MapSegmentDAO().delete(mapSegment)){
+					idField.setText("");
 				}
 			}
 		}

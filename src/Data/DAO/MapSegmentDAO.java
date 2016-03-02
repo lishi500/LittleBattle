@@ -104,10 +104,10 @@ public class MapSegmentDAO {
 		return null;
 	}
 	
-	public boolean insert(MapSegment mapSegment){
+	public int insert(MapSegment mapSegment){
 
 		Connection conn = Database.getInstance().getConnection();
-		String SQL = "Insert into map_segment (name,type,file_path,xpos,ypos,width,heigh) values(?,?,?,?,?,?,?)";
+		String SQL = "Insert into map_segment (name,type,file_path,xpos,ypos,width,height) values(?,?,?,?,?,?,?)";
 		
 		PreparedStatement psts=null;
 		try {
@@ -125,14 +125,14 @@ public class MapSegmentDAO {
 			ResultSet rs = psts.getGeneratedKeys();  
 			if (rs != null&&rs.next()) {  
 			    id=rs.getInt(1); 
-			    return true;
+			    return id;
 			}  
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
 			Database.getInstance().releaseConnection(conn);
 		}
-		return false;
+		return -1;
 	}
 	
 	public boolean delete(MapSegment mapSegment){

@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class MapSegment {
+	public MapSegment(){}
 	public MapSegment(String name, String type, String file_path, int xpos,
 			int ypos, int width, int height) {
 		super();

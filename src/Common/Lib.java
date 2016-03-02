@@ -1,5 +1,6 @@
 package Common;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -27,7 +28,17 @@ public class Lib {
 			selector.addItem(object);
 		}
 	}
-	
+	public <T> T[] concatenateArray (T[] a, T[] b) {
+	    int aLen = a.length;
+	    int bLen = b.length;
+
+	    @SuppressWarnings("unchecked")
+	    T[] c = (T[]) Array.newInstance(a.getClass().getComponentType(), aLen+bLen);
+	    System.arraycopy(a, 0, c, 0, aLen);
+	    System.arraycopy(b, 0, c, aLen, bLen);
+
+	    return c;
+	}
 	public boolean isNumber(String str){
 		if(str.matches("\\d+"))
 			return true;
