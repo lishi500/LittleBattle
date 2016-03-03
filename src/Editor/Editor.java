@@ -26,9 +26,10 @@ public class Editor extends JFrame implements ActionListener {
 	EquipmentPanel EquipmentPanel;
 	SkillPanel SkillPanel;
 	EffectPanel effectPanel;
-	MapSegmentPanel mapPanel;
+	MapSegmentPanel mapSegmentPanel;
+	MapPanel maPanel;
 	JButton home, addPlayer, addRole, addAttri, addGear, equipment, addSkill,
-			addEffectButton,addMapSegment;
+			addEffectButton,addMapSegment,addMap;
 
 	private Editor() {
 		this.setBounds(1800, 600, 800, 600);
@@ -69,7 +70,7 @@ public class Editor extends JFrame implements ActionListener {
 		addSkill = initialButton(addSkill, "Skill");
 		addEffectButton = initialButton(addEffectButton, "Effect");
 		addMapSegment = initialButton(addEffectButton, "Map Segment");
-
+		addMap = initialButton(addEffectButton, "Map");
 
 	}
 
@@ -154,9 +155,14 @@ public class Editor extends JFrame implements ActionListener {
 				swapPanel(effectPanel);
 				break;
 			case "Map Segment":
-				if (mapPanel == null)
-					mapPanel = new MapSegmentPanel();
-				swapPanel(mapPanel);
+				if (mapSegmentPanel == null)
+					mapSegmentPanel = new MapSegmentPanel();
+				swapPanel(mapSegmentPanel);
+				break;
+			case "Map":
+				if (maPanel == null)
+					maPanel = new MapPanel();
+				swapPanel(maPanel);
 				break;
 			default:
 				break;
