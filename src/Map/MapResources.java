@@ -7,12 +7,16 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import Data.DAO.MapSegmentDAO;
+
 public class MapResources {
 	HashMap<String, BufferedImage> resourceCenter;
+	HashMap<Integer,BufferedImage> segmentPool; 
 	private final String parentPath = "img/resources/";
 	private static MapResources resources;
 	private MapResources(){
 		resourceCenter = new HashMap<String, BufferedImage>();
+		segmentPool = new HashMap<Integer, BufferedImage>();
 	}
 	public static MapResources getInstance(){
 		if(resources==null){
@@ -46,9 +50,25 @@ public class MapResources {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+			}else{
+				return null;
 			}
 		}
 		return bimg;
+	}
+	public BufferedImage getSegmentByID(int id){
+		if(segmentPool.containsKey(id))
+			return segmentPool.get(id);
+		MapSegment mapSegment = new MapSegmentDAO().get(id);
+		BufferedImage bimg = getImageSegment(mapSegment);
+		segmentPool.put(id, bimg);
+		return bimg;
+	}
+	public BufferedImage getImageSegment(MapSegment mapSegment){
+		BufferedImage bimg =  getResources(mapSegment.file_path);
+		if(bimg!=null){
+			return bimg.getSubimage(mapSegment.xpos, mapSegment.ypos, mapSegment.width, mapSegment.height);
+		}
+		return null;
 	}
 }
