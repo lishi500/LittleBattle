@@ -23,7 +23,7 @@ public class Lib {
 		return lib;
 	}
 	
-	public void generateBox(ArrayList list, JComboBox selector){
+	public void generateBox(ArrayList<?> list, JComboBox selector){
 		for(Object object : list){
 			selector.addItem(object);
 		}

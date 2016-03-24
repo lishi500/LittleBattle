@@ -5,16 +5,23 @@ import java.awt.image.BufferedImage;
 import Object.Map;
 
 public class Map2D extends Map{
-	final int EMPTY = 0;
-	final int BORDER = -1;
-	final int CONTENT = -2;
+	public Map2D(int width, int height) {
+		super(width, height);
+	}
 	int[][] imageMatrix;
 	int[][] obstacleMatrix;
 	
-	public void addImageToMap(int xpos,int ypos,BufferedImage img){
-		if(imageMatrix[ypos][xpos]!=0){
-			
+	
+	public void addImageToMap(int xpos,int ypos,MapSegment mapSegment){
+		if(imageMatrix[ypos][xpos]==0){
+			for(int i=ypos;i<ypos+mapSegment.getImage().getWidth();i++){
+				for(int k=xpos;k<xpos+mapSegment.getImage().getHeight();k++){
+					imageMatrix[i][k] = mapSegment.id;
+					mapImage.setRGB(k, i, mapSegment.getImage().getRGB(k-mapSegment.getImage().getWidth(), i-mapSegment.getImage().getHeight()));
+				}
+			}
 		}
+		
 	}
 	
 	public void cleanImage(int x_index, int y_index){
